@@ -1,9 +1,8 @@
 package com.sistemadenuncias.sistemadenuncias.models;
 
 import jakarta.persistence.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +11,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
     private Integer idUser;
 
     private String nome;
@@ -20,11 +18,8 @@ public class User {
     private String email;
     private String senha;
 
-    String spass =  new BCryptPasswordEncoder().encode("senha");
-
-
     @Column(name = "data_registro")
-    private Timestamp dataRegisto;
+    private LocalDateTime dataRegisto;
 
     @ManyToOne
     @JoinColumn(name = "reparticao_id", nullable = false)
@@ -70,11 +65,11 @@ public class User {
         this.senha = senha;
     }
 
-    public Timestamp getDataRegisto() {
+    public LocalDateTime getDataRegisto() {
         return dataRegisto;
     }
 
-    public void setDataRegisto(Timestamp dataRegisto) {
+    public void setDataRegisto(LocalDateTime dataRegisto) {
         this.dataRegisto = dataRegisto;
     }
 
@@ -105,7 +100,6 @@ public class User {
                 ", nome='" + nome + '\'' +
                 ", apelido='" + apelido + '\'' +
                 ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
                 ", dataRegisto=" + dataRegisto +
                 ", reparticao=" + reparticao +
                 '}';

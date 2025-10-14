@@ -1,6 +1,5 @@
 package com.sistemadenuncias.sistemadenuncias.services;
 
-
 import com.sistemadenuncias.sistemadenuncias.models.User;
 import com.sistemadenuncias.sistemadenuncias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

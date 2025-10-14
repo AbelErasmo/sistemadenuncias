@@ -1,30 +1,13 @@
-package com.sistemadenuncias.sistemadenuncias.models;
-
-import jakarta.persistence.*;
+package com.sistemadenuncias.sistemadenuncias.DTO;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "evidencias")
-public class Evidencias {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_evidencias")
+public class EvidenciaResponseDTO {
     private Long id;
-
-    @Column(name = "caminho_arquivo", nullable = false)
     private String caminhoArquivo;
-
-    @Column(name = "tipo_arquivo", nullable = false)
     private String tipoArquivo;
-
-    @Column(name = "data_upload", nullable = false)
     private LocalDateTime dataUpload;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "denuncias_id", referencedColumnName = "id_denuncia")
-    private Denuncia denuncia;
+    private String protocoloDenuncia;
 
     public Long getId() {
         return id;
@@ -58,11 +41,11 @@ public class Evidencias {
         this.dataUpload = dataUpload;
     }
 
-    public Denuncia getDenuncia() {
-        return denuncia;
+    public String getProtocoloDenuncia() {
+        return protocoloDenuncia;
     }
 
-    public void setDenuncia(Denuncia denuncia) {
-        this.denuncia = denuncia;
+    public void setProtocoloDenuncia(String protocoloDenuncia) {
+        this.protocoloDenuncia = protocoloDenuncia;
     }
 }

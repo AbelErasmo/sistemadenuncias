@@ -9,13 +9,36 @@ public class Reparticao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reparticao")
-    private Integer idReparticao;
+    private Long idReparticao;
 
-    public Integer getIdReparticao() {
+    @Column(name = "nome_reparticao", nullable = false)
+    private String nome;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "provincias_id", referencedColumnName = "id_provincias")
+    private Provincias provincias;
+
+    public Long getIdReparticao() {
         return idReparticao;
     }
 
-    public void setIdReparticao(Integer idReparticao) {
+    public void setIdReparticao(Long idReparticao) {
         this.idReparticao = idReparticao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Provincias getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(Provincias provincias) {
+        this.provincias = provincias;
     }
 }
