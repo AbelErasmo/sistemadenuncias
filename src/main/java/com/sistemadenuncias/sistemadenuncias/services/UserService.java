@@ -6,6 +6,7 @@ import com.sistemadenuncias.sistemadenuncias.models.Reparticao;
 import com.sistemadenuncias.sistemadenuncias.models.User;
 import com.sistemadenuncias.sistemadenuncias.repository.ReparticaoRepository;
 import com.sistemadenuncias.sistemadenuncias.repository.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ReparticaoRepository reparticaoRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, ReparticaoRepository reparticaoRepository,
                        PasswordEncoder passwordEncoder) {
@@ -26,7 +27,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User criar(UserRequestDTO dto) {
+    public User criar(@NotNull UserRequestDTO dto) {
         Reparticao reparticao = reparticaoRepository.findById(dto.getReparticaoId())
                 .orElseThrow(() -> new RuntimeException("Repartição não encontrada"));
 
@@ -34,6 +35,10 @@ public class UserService {
         String senhaCriptografada = passwordEncoder.encode(dto.getSenha());
 
         User user = new User();
+
+        userRepository.findByEmail(dto.getEmail()).orElse(null);
+        System.out.println("Usuário encontrado: " + user);
+
         user.setNome(dto.getNome());
         user.setApelido(dto.getApelido());
         user.setEmail(dto.getEmail());
@@ -44,7 +49,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private static void validarSenha(UserRequestDTO dto) {
+    private static void validarSenha(@NotNull UserRequestDTO dto) {
         if (dto.getSenha() == null || dto.getSenha().isBlank()) {
             throw new IllegalArgumentException("Senha não pode estar vazia");
         }
@@ -57,7 +62,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponseDTO toResponseDTO(User user) {
+    public UserResponseDTO toResponseDTO(@NotNull User user) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setId(user.getIdUser());
         dto.setNome(user.getNome());

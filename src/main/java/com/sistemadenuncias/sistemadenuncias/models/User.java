@@ -3,7 +3,9 @@ package com.sistemadenuncias.sistemadenuncias.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -24,6 +26,17 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "reparticao_id", nullable = false)
     private Reparticao reparticao;
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles = new HashSet<>();
 
     public Integer getIdUser() {
         return idUser;
